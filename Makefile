@@ -7,7 +7,7 @@ MLXFLAGS = -lmlx -lXext -lX11 -lm
 SRC_DIR = src/
 OBJ_DIR = obj/
 
-SRC_FILES = main.c map.c game.c utils.c
+SRC_FILES = main.c map.c game.c utils.c ../get_next_line/get_next_line.c ../get_next_line/get_next_line_utils.c
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 OBJ = $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o))
 
