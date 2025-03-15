@@ -1,4 +1,4 @@
-#include "../includes/so_long.h"
+#include "../so_long.h"
 
 int	init_game(t_game *game)
 {

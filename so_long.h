@@ -6,12 +6,12 @@
 # include <unistd.h>
 # include <string.h>
 # include <fcntl.h>
-# include "../minilibx-linux/mlx.h"
-# include "../get_next_line/get_next_line.h"
+# include "mlx/mlx.h"
+# include "./src/get_next_line/get_next_line.h"
 # include <X11/keysym.h>
 # include <X11/X.h>
 
-# define TILE_SIZE 32
+# define TILE_SIZE 64
 # define ESC 65307
 # define W 119
 # define A 97
@@ -76,5 +76,6 @@ int		close_game(t_game *game);
 // Utility functions
 void	error_msg(char *message);
 void	free_map(t_game *game);
+char	*get_next_line(int fd);
 
 #endif

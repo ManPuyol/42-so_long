@@ -2,7 +2,11 @@ NAME = so_long
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
-MLXFLAGS = -lmlx -lXext -lX11 -lm
+MLX_FLAGS = -Lmlx -lmlx -L/usr/lib/X11 -lXext -lX11
+MLX_DIR = ./mlx
+MLX_LIB = $(MLX_DIR)/libmlx_Linux.a
+
+INCLUDES = -I/usr/include -Imlx
 
 SRC_DIR = src/
 OBJ_DIR = obj/
@@ -11,15 +15,16 @@ SRC_FILES = main.c map.c game.c utils.c ../get_next_line/get_next_line.c ../get_
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 OBJ = $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o))
 
-all: $(NAME)
+all: $(MLX_LIB) $(NAME)
+
 
 $(NAME): $(OBJ)
 	@mkdir -p $(OBJ_DIR)
-	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(MLXFLAGS)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(MLX_FLAGS)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@mkdir -p $(OBJ_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDES) -c -o $@ $< 
 
 clean:
 	rm -rf $(OBJ_DIR)

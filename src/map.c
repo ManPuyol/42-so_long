@@ -1,4 +1,4 @@
-#include "../includes/so_long.h"
+#include "../so_long.h"
 
 static int	get_map_height(char *file_path)
 {
