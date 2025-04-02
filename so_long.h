@@ -6,7 +6,7 @@
 /*   By: manorteg <manorteg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:52:38 by manorteg          #+#    #+#             */
-/*   Updated: 2025/04/02 17:52:39 by manorteg         ###   ########.fr       */
+/*   Updated: 2025/04/02 19:31:25 by manorteg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <X11/keysym.h>
 # include <X11/X.h>
 
-# define TILE_SIZE 16
+# define TILE_SIZE 64
 # define ESC 65307
 # define W 119
 # define A 97
@@ -59,6 +59,20 @@ typedef struct s_img
 	int		height;
 }	t_img;
 
+typedef struct s_image_data
+{
+	char	*new_data;
+	char	*old_data;
+	int		new_size_line;
+	int		old_size_line;
+	int		new_bpp;
+	int		old_bpp;
+	int		new_endian;
+	int		old_endian;
+	int		img_width;
+	int		img_height;
+}	t_image_data;
+
 typedef struct s_game
 {
 	void		*mlx;
@@ -72,11 +86,9 @@ typedef struct s_game
 	int			moves;
 }	t_game;
 
-// Map functions
 int		parse_map(t_game *game, char *file_path);
 int		validate_map(t_game *game);
 
-// Game functions
 int		init_game(t_game *game);
 int		init_images(t_game *game);
 int		render_map(t_game *game);
@@ -85,9 +97,9 @@ int		game_loop(t_game *game);
 void	move_player(t_game *game, int x, int y);
 int		close_game(t_game *game);
 
-// Utility functions
 void	error_msg(char *message);
 void	free_map(t_game *game);
 char	*get_next_line(int fd);
+void	resize_image(t_game *game, t_img *img);
 
 #endif

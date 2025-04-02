@@ -6,7 +6,7 @@
 /*   By: manorteg <manorteg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:52:52 by manorteg          #+#    #+#             */
-/*   Updated: 2025/04/02 18:39:43 by manorteg         ###   ########.fr       */
+/*   Updated: 2025/04/02 19:17:51 by manorteg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,17 @@ int	init_game(t_game *game)
 
 int	init_images(t_game *game)
 {
-	game->wall.img = mlx_xpm_file_to_image(game->mlx, "assets/wall.xpm", 
-		&game->wall.width, &game->wall.height);
-	game->player.img = mlx_xpm_file_to_image(game->mlx, "assets/player.xpm", 
-		&game->player.width, &game->player.height);
-	game->collectible.img = mlx_xpm_file_to_image(game->mlx, "assets/collectible.xpm",
-		&game->collectible.width, &game->collectible.height);
-	game->exit.img = mlx_xpm_file_to_image(game->mlx, "assets/exit.xpm", 
-		&game->exit.width, &game->exit.height);
-	game->floor.img = mlx_xpm_file_to_image(game->mlx, "assets/floor.xpm", 
-		&game->floor.width, &game->floor.height);
-
+	game->wall.img = mlx_xpm_file_to_image(game->mlx, "assets/wall.xpm",
+			&game->wall.width, &game->wall.height);
+	game->player.img = mlx_xpm_file_to_image(game->mlx, "assets/player.xpm",
+			&game->player.width, &game->player.height);
+	game->collectible.img = mlx_xpm_file_to_image(game->mlx,
+			"assets/collectible.xpm", &game->collectible.width,
+			&game->collectible.height);
+	game->exit.img = mlx_xpm_file_to_image(game->mlx, "assets/exit.xpm",
+			&game->exit.width, &game->exit.height);
+	game->floor.img = mlx_xpm_file_to_image(game->mlx, "assets/floor.xpm",
+			&game->floor.width, &game->floor.height);
 
 	if (!game->wall.img || !game->player.img || !game->collectible.img
 		|| !game->exit.img || !game->floor.img)
@@ -52,7 +52,11 @@ int	init_images(t_game *game)
 		error_msg("Failed to load images");
 		return (0);
 	}
-
+	resize_image(game, &game->wall);
+	resize_image(game, &game->player);
+	resize_image(game, &game->collectible);
+	resize_image(game, &game->exit);
+	resize_image(game, &game->floor);
 	return (1);
 }
 
@@ -98,41 +102,23 @@ void	move_player(t_game *game, int x, int y)
 
 	new_x = game->map.player_pos.x + x;
 	new_y = game->map.player_pos.y + y;
-
-	// Check for wall collision
 	if (game->map.grid[new_y][new_x] == '1')
 		return ;
-
-	// Check for exit (can only exit if all collectibles are collected)
-	if (game->map.grid[new_y][new_x] == 'E')
+	if (game->map.grid[new_y][new_x] == 'E'
+		&& game->map.collected == game->map.collectibles)
 	{
-		if (game->map.collected == game->map.collectibles)
-		{
-			printf("Game completed in %d moves!\n", game->moves + 1);
-			close_game(game);
-			exit(0);
-		}
-		return ;
+		printf("Game completed in %d moves!\n", game->moves + 1);
+		close_game(game);
+		exit(0);
 	}
-
-	// Check for collectible
 	if (game->map.grid[new_y][new_x] == 'C')
-	{
 		game->map.collected++;
-		game->map.grid[new_y][new_x] = '0';
-	}
-
-	// Update grid and player position
 	game->map.grid[game->map.player_pos.y][game->map.player_pos.x] = '0';
 	game->map.grid[new_y][new_x] = 'P';
 	game->map.player_pos.x = new_x;
 	game->map.player_pos.y = new_y;
-
-	// Count move
 	game->moves++;
 	printf("Moves: %d\n", game->moves);
-
-	// Render updated map
 	render_map(game);
 }
 
@@ -154,7 +140,6 @@ int	handle_input(int keysym, t_game *game)
 
 int	close_game(t_game *game)
 {
-	// Clean up images
 	if (game->wall.img)
 		mlx_destroy_image(game->mlx, game->wall.img);
 	if (game->player.img)
@@ -166,16 +151,13 @@ int	close_game(t_game *game)
 	if (game->floor.img)
 		mlx_destroy_image(game->mlx, game->floor.img);
 
-	// Clean up window and MLX
 	if (game->win)
 		mlx_destroy_window(game->mlx, game->win);
 	if (game->mlx)
 		mlx_destroy_display(game->mlx);
 
-	// Free allocated memory
 	free_map(game);
 	free(game->mlx);
 
 	exit(0);
-	return (0);
 }
