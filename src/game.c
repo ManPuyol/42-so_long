@@ -6,7 +6,7 @@
 /*   By: manorteg <manorteg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:52:52 by manorteg          #+#    #+#             */
-/*   Updated: 2025/04/02 19:17:51 by manorteg         ###   ########.fr       */
+/*   Updated: 2025/04/02 20:27:06 by manorteg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,41 +57,6 @@ int	init_images(t_game *game)
 	resize_image(game, &game->collectible);
 	resize_image(game, &game->exit);
 	resize_image(game, &game->floor);
-	return (1);
-}
-
-int	render_map(t_game *game)
-{
-	int	x;
-	int	y;
-
-	y = 0;
-	while (y < game->map.height)
-	{
-		x = 0;
-		while (x < game->map.width)
-		{
-			mlx_put_image_to_window(game->mlx, game->win, game->floor.img,
-				x * TILE_SIZE, y * TILE_SIZE);
-
-			if (game->map.grid[y][x] == '1')
-				mlx_put_image_to_window(game->mlx, game->win, game->wall.img,
-					x * TILE_SIZE, y * TILE_SIZE);
-			else if (game->map.grid[y][x] == 'C')
-				mlx_put_image_to_window(game->mlx, game->win,
-					game->collectible.img,
-					x * TILE_SIZE, y * TILE_SIZE);
-			else if (game->map.grid[y][x] == 'E')
-				mlx_put_image_to_window(game->mlx, game->win, game->exit.img,
-					x * TILE_SIZE, y * TILE_SIZE);
-			else if (game->map.grid[y][x] == 'P')
-				mlx_put_image_to_window(game->mlx, game->win, game->player.img,
-					x * TILE_SIZE, y * TILE_SIZE);
-			x++;
-		}
-		y++;
-	}
-
 	return (1);
 }
 

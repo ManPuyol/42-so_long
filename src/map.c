@@ -6,7 +6,7 @@
 /*   By: manorteg <manorteg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:52:24 by manorteg          #+#    #+#             */
-/*   Updated: 2025/04/02 18:05:23 by manorteg         ###   ########.fr       */
+/*   Updated: 2025/04/02 20:30:39 by manorteg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	get_map_height(char *file_path)
 	return (height);
 }
 
-static int	allocate_map(t_game *game, char *file_path)
+int	allocate_map(t_game *game, char *file_path)
 {
 	game->map.height = get_map_height(file_path);
 	if (game->map.height <= 2)
@@ -55,7 +55,7 @@ static int	allocate_map(t_game *game, char *file_path)
 	return (1);
 }
 
-static int	fill_map(t_game *game, char *file_path)
+int	fill_map(t_game *game, char *file_path)
 {
 	int		fd;
 	int		i;
@@ -154,32 +154,5 @@ int	validate_map(t_game *game)
 			}
 		}
 	}
-	return (1);
-}
-
-int	parse_map(t_game *game, char *file_path)
-{
-	if (!strstr(file_path, ".ber")
-		||strcmp(strrchr(file_path, '.'), ".ber") != 0)
-	{
-		error_msg("Map file must have .ber extension");
-		return (0);
-	}
-
-	if (!allocate_map(game, file_path))
-		return (0);
-
-	if (!fill_map(game, file_path))
-	{
-		free_map(game);
-		return (0);
-	}
-
-	if (!validate_map(game))
-	{
-		free_map(game);
-		return (0);
-	}
-
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: manorteg <manorteg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:52:38 by manorteg          #+#    #+#             */
-/*   Updated: 2025/04/02 19:31:25 by manorteg         ###   ########.fr       */
+/*   Updated: 2025/04/02 20:30:50 by manorteg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ typedef struct s_game
 
 int		parse_map(t_game *game, char *file_path);
 int		validate_map(t_game *game);
+int		allocate_map(t_game *game, char *file_path);
+int		fill_map(t_game *game, char *file_path);
 
 int		init_game(t_game *game);
 int		init_images(t_game *game);
