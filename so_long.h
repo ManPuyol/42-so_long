@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   so_long.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: manorteg <manorteg@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/02 17:52:38 by manorteg          #+#    #+#             */
+/*   Updated: 2025/04/02 17:52:39 by manorteg         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
@@ -11,7 +23,7 @@
 # include <X11/keysym.h>
 # include <X11/X.h>
 
-# define TILE_SIZE 64
+# define TILE_SIZE 16
 # define ESC 65307
 # define W 119
 # define A 97
